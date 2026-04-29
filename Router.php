@@ -12,13 +12,6 @@ class Router
         ];
     }
 
-    /*
-     
-Add GET route
-@param string $uri
-@param string $controller
-@return void */
-
     public function get($uri, $controller)
     {
         $this->registerRoutes('GET', $uri, $controller);
