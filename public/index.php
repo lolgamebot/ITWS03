@@ -1,25 +1,24 @@
 <?php
 
-require __DIR__ . '/../helpers.php';
+require '../helpers.php';
 
 require basePath('Router.php');
-
 require basePath('Database.php');
+
+$config = require basePath('Config/db.php');
+
+$db = new Database($config);
 
 $router = new Router();
 
 $routes = require basePath('routes.php');
 
-$config = require basePath ('config/db.php');
-
-$db = new Database($config);
-
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-$base = '/WS03/Public';
+$basePath = dirname($_SERVER['SCRIPT_NAME']);
 
-if (strpos($uri, $base) === 0) {
-    $uri = substr($uri, strlen($base));
+if ($basePath !== '/' && str_starts_with($uri, $basePath)) {
+    $uri = substr($uri, strlen($basePath));
 }
 
 $uri = $uri === '' ? '/' : $uri;

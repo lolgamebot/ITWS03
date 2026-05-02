@@ -1,12 +1,5 @@
 <?php
 
-function inspect($value)
-{
-    echo '<pre>',
-    var_dump($value);
-    echo '</pre>';
-}
-
 function basePath($path = '')
 {
     return __DIR__ . '/' . $path;
@@ -26,4 +19,11 @@ function loadPartial($name)
     } else {
         echo "Partial '{$name}' not found.";
     }
+}
+
+function inspect($value)
+{
+    echo '<pre>';
+    print_r($value);
+    echo '</pre>';
 }
