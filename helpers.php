@@ -1,5 +1,8 @@
 <?php
 
+require __DIR__ . '/Database.php';
+require __DIR__ . '/Router.php';
+
 function basePath($path = '')
 {
     return __DIR__ . '/' . $path;

@@ -1,0 +1,15 @@
+{
+    "name": "rage/ws03",
+    "autoload": {
+        "psr-4": {
+            "Rage\\Ws03\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "lolgamebot",
+            "email": "rageandfury2@gmail.com"
+        }
+    ],
+    "require": {}
+}
