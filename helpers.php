@@ -2,6 +2,9 @@
 
 require __DIR__ . '/Database.php';
 require __DIR__ . '/Router.php';
+require __DIR__ . '/controllers/HomeController.php';
+require __DIR__ . '/controllers/ListingController.php';
+require __DIR__ . '/controllers/ErrorController.php';
 
 function basePath($path = '')
 {
