@@ -36,7 +36,20 @@ function inspect($value)
     echo '</pre>';
 }
 
-function sanitize($dirty)
+function inspectAndDie($value)
+{
+    echo '<pre>';
+    print_r($value);
+    echo '</pre>';
+    die();
+}
+
+/**
+ * Sanitize data
+ * @param string $dirty
+ * @return string
+ */
+function sanitize(string $dirty): string
 {
     return filter_var(trim($dirty), FILTER_SANITIZE_SPECIAL_CHARS);
 }

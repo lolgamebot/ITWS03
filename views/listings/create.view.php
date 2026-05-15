@@ -12,11 +12,11 @@
 
       <?php if (!empty($errors)): ?>
       <div class="form-errors">
-        <ul>
-          <?php foreach ($errors as $error): ?>
-            <li><?= htmlspecialchars($error) ?></li>
-          <?php endforeach; ?>
-        </ul>
+        <?php foreach ($errors as $error): ?>
+          <div class="bg-red-100 m-3">
+            <p><?= htmlspecialchars($error) ?></p>
+          </div>
+        <?php endforeach; ?>
       </div>
       <?php endif; ?>
 
@@ -32,7 +32,7 @@
 
             <div class="form-group full">
               <label for="description">Job Description</label>
-              <textarea id="description" name="description" rows="5" placeholder="Describe the role, responsibilities, and expectations..." class="form-input"><?= htmlspecialchars($listing['description'] ?? '') ?></textarea>
+              <textarea id="description" name="description" rows="5" placeholder="Describe the role..." class="form-input"><?= htmlspecialchars($listing['description'] ?? '') ?></textarea>
             </div>
 
             <div class="form-group">
@@ -47,7 +47,7 @@
 
             <div class="form-group full">
               <label for="benefits">Benefits</label>
-              <input type="text" id="benefits" name="benefits" placeholder="Health insurance, remote work, bonuses" class="form-input" value="<?= htmlspecialchars($listing['benefits'] ?? '') ?>" />
+              <input type="text" id="benefits" name="benefits" placeholder="Health insurance, remote work" class="form-input" value="<?= htmlspecialchars($listing['benefits'] ?? '') ?>" />
             </div>
           </div>
         </div>

@@ -2,7 +2,8 @@
     "name": "rage/ws03",
     "autoload": {
         "psr-4": {
-            "Rage\\Ws03\\": "src/"
+            "Rage\\Ws03\\": "src/",
+            "Framework\\": "Framework/"
         }
     },
     "authors": [

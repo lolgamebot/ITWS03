@@ -1,5 +1,7 @@
 <?php
 
+use Framework\Validation;
+
 class ListingController
 {
     protected $db;
@@ -38,43 +40,54 @@ class ListingController
         loadView('listings/show', ['listing' => $listing]);
     }
 
+    /**
+     * Store data in database
+     * @return void
+     */
     public function store()
     {
         $allowedFields = [
-            'title', 'description', 'salary', 'requirements',
-            'benefits', 'company', 'address', 'city', 'state', 'phone', 'email'
+            'title', 'description', 'salary', 'tags',
+            'company', 'address', 'city', 'state',
+            'phone', 'email', 'requirements', 'benefits'
         ];
 
-        $newListing = [];
+        $newListingData = array_intersect_key($_POST, array_flip($allowedFields));
 
-        foreach ($allowedFields as $field) {
-            $newListing[$field] = isset($_POST[$field]) ? sanitize($_POST[$field]) : '';
-        }
+        $newListingData['user_id'] = 1;
 
-        $requiredFields = ['title', 'description', 'salary', 'company', 'city', 'state', 'email'];
+        $newListingData = array_map('sanitize', $newListingData);
+
+        $requiredFields = ['title', 'description', 'email', 'city', 'state'];
+
         $errors = [];
 
         foreach ($requiredFields as $field) {
-            if (empty($newListing[$field])) {
+            if (!Validation::string($newListingData[$field] ?? '')) {
                 $errors[] = ucfirst($field) . ' is required.';
             }
+        }
+
+        if (!empty($newListingData['email']) && !Validation::email($newListingData['email'])) {
+            $errors[] = 'Please enter a valid email address.';
         }
 
         if (!empty($errors)) {
             loadView('listings/create', [
                 'errors' => $errors,
-                'listing' => $newListing,
+                'listing' => $newListingData,
             ]);
             return;
         }
 
-        $query = "INSERT INTO listings
-            (title, description, salary, requirements, benefits, company, address, city, state, phone, email)
-            VALUES
-            (:title, :description, :salary, :requirements, :benefits, :company, :address, :city, :state, :phone, :email)";
+        // Submit data
+        $fields = implode(', ', array_keys($newListingData));
+        $placeholders = implode(', ', array_map(fn($f) => ":{$f}", array_keys($newListingData)));
+
+        $query = "INSERT INTO listings ({$fields}) VALUES ({$placeholders})";
 
         $params = [];
-        foreach ($newListing as $key => $value) {
+        foreach ($newListingData as $key => $value) {
             $params[":{$key}"] = $value;
         }
 
