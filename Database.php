@@ -27,11 +27,11 @@ class Database
         }
     }
 
-    public function Query($Query)
+    public function Query($Query, $params = [])
     {
         try {
             $sth = $this->conn->prepare($Query);
-            $sth->execute();
+            $sth->execute($params);
 
             return $sth;
         } catch (PDOException $e) {
