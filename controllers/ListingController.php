@@ -58,7 +58,7 @@ class ListingController
 
         $newListingData = array_map('sanitize', $newListingData);
 
-        $requiredFields = ['title', 'description', 'email', 'city', 'state'];
+        $requiredFields = ['title', 'description', 'salary', 'email', 'city', 'state'];
 
         $errors = [];
 
@@ -80,11 +80,11 @@ class ListingController
             return;
         }
 
-        // Submit data
+        // Build dynamic query
         $fields = implode(', ', array_keys($newListingData));
-        $placeholders = implode(', ', array_map(fn($f) => ":{$f}", array_keys($newListingData)));
+        $values = implode(', ', array_map(fn($f) => ":{$f}", array_keys($newListingData)));
 
-        $query = "INSERT INTO listings ({$fields}) VALUES ({$placeholders})";
+        $query = "INSERT INTO listings ({$fields}) VALUES ({$values})";
 
         $params = [];
         foreach ($newListingData as $key => $value) {
@@ -92,6 +92,33 @@ class ListingController
         }
 
         $this->db->Query($query, $params);
+
+        redirect('/listings');
+    }
+
+    /**
+     * Delete a listing
+     * @param string $id
+     * @return void
+     */
+    public function destroy($id)
+    {
+        $params = [':id' => $id];
+
+        $listing = $this->db->Query(
+            'SELECT * FROM listings WHERE id = :id',
+            $params
+        )->fetch();
+
+        if (!$listing) {
+            $errorController = new ErrorController();
+            $errorController->notFound();
+            return;
+        }
+
+        $this->db->Query('DELETE FROM listings WHERE id = :id', $params);
+
+        $_SESSION['success_message'] = 'Listing deleted successfully.';
 
         redirect('/listings');
     }

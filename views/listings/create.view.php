@@ -49,6 +49,11 @@
               <label for="benefits">Benefits</label>
               <input type="text" id="benefits" name="benefits" placeholder="Health insurance, remote work" class="form-input" value="<?= htmlspecialchars($listing['benefits'] ?? '') ?>" />
             </div>
+
+            <div class="form-group full">
+              <label for="tags">Tags</label>
+              <input type="text" id="tags" name="tags" placeholder="Sales, Lady, Conductor" class="form-input" value="<?= htmlspecialchars($listing['tags'] ?? '') ?>" />
+            </div>
           </div>
         </div>
 

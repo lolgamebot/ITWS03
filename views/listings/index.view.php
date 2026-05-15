@@ -1,17 +1,22 @@
-<?php
-loadPartial('head');
-loadPartial('navbar');
-?>
+<?php loadPartial('head'); ?>
+<?php loadPartial('navbar'); ?>
 
 <section class="jobs-section">
     <div class="container mx-auto max-w-6xl px-4">
         <div class="jobs-section-header">
             <span class="jobs-section-badge">All Opportunities</span>
-            <h1 class="jobs-section-title">Browse All Jobs</h1>
+            <h1 class="jobs-section-title">All Jobs</h1>
             <p class="jobs-section-subtitle">
                 Explore available openings across engineering, design, marketing, and data roles.
             </p>
         </div>
+
+        <?php if (isset($_SESSION['success_message'])): ?>
+        <div class="bg-green-100 p-3 m-3">
+            <p><?= htmlspecialchars($_SESSION['success_message']) ?></p>
+        </div>
+        <?php unset($_SESSION['success_message']); ?>
+        <?php endif; ?>
 
         <div class="jobs-grid">
             <?php foreach ($listings as $listing): ?>
@@ -34,12 +39,14 @@ loadPartial('navbar');
                             <span class="job-meta-label">Location</span>
                             <span class="job-location"><?= htmlspecialchars($listing['city']) ?>, <?= htmlspecialchars($listing['state']) ?></span>
                         </div>
+                        <?php if (!empty($listing['tags'])): ?>
                         <div class="job-meta-row job-tags-row">
                             <span class="job-meta-label">Tags</span>
                             <div class="job-tags">
-                                <span class="job-tag"><?= htmlspecialchars($listing['requirements']) ?></span>
+                                <span class="job-tag"><?= htmlspecialchars($listing['tags']) ?></span>
                             </div>
                         </div>
+                        <?php endif; ?>
                     </div>
 
                     <a href="/WS03/Public/listings/<?= $listing['id'] ?>" class="job-details-btn">View Details</a>

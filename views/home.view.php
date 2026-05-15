@@ -40,6 +40,12 @@ loadPartial('showcase');
                             <span class="job-meta-label">Location</span>
                             <span class="job-location"><?= htmlspecialchars($listing['city']) ?>, <?= htmlspecialchars($listing['state']) ?></span>
                         </div>
+                        <?php if (!empty($listing['tags'])): ?>
+                        <div class="job-meta-row">
+                            <span class="job-meta-label">Tags</span>
+                            <span><?= htmlspecialchars($listing['tags']) ?></span>
+                        </div>
+                        <?php endif; ?>
                     </div>
                     <a href="/WS03/Public/listings/<?= $listing['id'] ?>" class="job-details-btn">View Details</a>
                 </div>

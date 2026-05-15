@@ -1,9 +1,11 @@
 <?php
 
+session_start();
+
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../helpers.php';
 
-$config = require basePath('Config/db.php');
+$config = require basePath('config/db.php');
 
 $db = new Database($config);
 

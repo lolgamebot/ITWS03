@@ -38,6 +38,12 @@
               <span class="job-meta-label">Benefits</span>
               <span><?= htmlspecialchars($listing['benefits']) ?></span>
             </div>
+            <?php if (!empty($listing['tags'])): ?>
+            <div class="job-meta-row">
+              <span class="job-meta-label">Tags</span>
+              <span><?= htmlspecialchars($listing['tags']) ?></span>
+            </div>
+            <?php endif; ?>
           </div>
         </div>
 
@@ -51,6 +57,14 @@
             <i class="fa fa-arrow-left"></i>
             Back to Listings
           </a>
+
+          <form method="POST" action="/WS03/Public/listings/<?= $listing['id'] ?>">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to delete this listing?')">
+              <i class="fa fa-trash"></i>
+              Delete
+            </button>
+          </form>
         </div>
       </div>
     </div>

@@ -70,6 +70,11 @@ class Router
      */
     public function route($uri, $method)
     {
+        // Check for method override via hidden _method input
+        if ($method === 'POST' && isset($_POST['_method'])) {
+            $method = strtoupper($_POST['_method']);
+        }
+
         foreach ($this->routes as $route) {
             $pattern = '#^' . preg_replace('/\{[^}]+\}/', '([^/]+)', $route['uri']) . '$#';
 
