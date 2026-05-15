@@ -71,13 +71,17 @@ class Router
     public function route($uri, $method)
     {
         foreach ($this->routes as $route) {
-            if ($route['uri'] === $uri && $route['method'] === $method) {
+            $pattern = '#^' . preg_replace('/\{[^}]+\}/', '([^/]+)', $route['uri']) . '$#';
+
+            if (preg_match($pattern, $uri, $matches) && $route['method'] === $method) {
+                array_shift($matches);
+
                 [$controller, $action] = explode('@', $route['controller']);
 
                 if (class_exists($controller)) {
                     $controllerInstance = new $controller();
                     if (method_exists($controllerInstance, $action)) {
-                        $controllerInstance->$action();
+                        $controllerInstance->$action(...$matches);
                         return;
                     }
                 }

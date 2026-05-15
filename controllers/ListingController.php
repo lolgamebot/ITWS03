@@ -22,6 +22,22 @@ class ListingController
         loadView('listings/create');
     }
 
+    public function show($id)
+    {
+        $listing = $this->db->Query(
+            'SELECT * FROM listings WHERE id = :id',
+            [':id' => $id]
+        )->fetch();
+
+        if (!$listing) {
+            $errorController = new ErrorController();
+            $errorController->notFound();
+            return;
+        }
+
+        loadView('listings/show', ['listing' => $listing]);
+    }
+
     public function store()
     {
         $allowedFields = [
