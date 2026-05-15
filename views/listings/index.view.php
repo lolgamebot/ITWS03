@@ -11,12 +11,7 @@
             </p>
         </div>
 
-        <?php if (isset($_SESSION['success_message'])): ?>
-        <div class="bg-green-100 p-3 m-3">
-            <p><?= htmlspecialchars($_SESSION['success_message']) ?></p>
-        </div>
-        <?php unset($_SESSION['success_message']); ?>
-        <?php endif; ?>
+        <?php loadPartial('message'); ?>
 
         <div class="jobs-grid">
             <?php foreach ($listings as $listing): ?>

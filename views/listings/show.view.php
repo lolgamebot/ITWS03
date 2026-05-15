@@ -58,6 +58,11 @@
             Back to Listings
           </a>
 
+          <a href="/WS03/Public/listings/<?= $listing['id'] ?>/edit" class="btn btn-primary">
+            <i class="fa fa-pen"></i>
+            Edit
+          </a>
+
           <form method="POST" action="/WS03/Public/listings/<?= $listing['id'] ?>">
             <input type="hidden" name="_method" value="DELETE">
             <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to delete this listing?')">
