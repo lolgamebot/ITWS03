@@ -56,7 +56,7 @@ function sanitize(string $dirty): string
 
 function redirect($path)
 {
-    $base = defined('BASE_PATH') ? BASE_PATH : '/WS03/Public';
+    $base = defined('BASE_PATH') ? BASE_PATH : '/WS03/public';
     header("Location: {$base}{$path}");
     exit;
 }
