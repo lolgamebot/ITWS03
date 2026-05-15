@@ -10,34 +10,44 @@
         <p>Post a new opportunity and reach the right candidates faster.</p>
       </div>
 
-      <form method="POST" class="job-form">
+      <?php if (!empty($errors)): ?>
+      <div class="form-errors">
+        <ul>
+          <?php foreach ($errors as $error): ?>
+            <li><?= htmlspecialchars($error) ?></li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+      <?php endif; ?>
+
+      <form method="POST" action="/WS03/Public/listings" class="job-form">
         <div class="form-section">
           <h2>Job Information</h2>
 
           <div class="form-grid">
             <div class="form-group full">
               <label for="title">Job Title</label>
-              <input type="text" id="title" name="title" placeholder="Frontend Developer" class="form-input" />
+              <input type="text" id="title" name="title" placeholder="Frontend Developer" class="form-input" value="<?= htmlspecialchars($listing['title'] ?? '') ?>" />
             </div>
 
             <div class="form-group full">
               <label for="description">Job Description</label>
-              <textarea id="description" name="description" rows="5" placeholder="Describe the role, responsibilities, and expectations..." class="form-input"></textarea>
+              <textarea id="description" name="description" rows="5" placeholder="Describe the role, responsibilities, and expectations..." class="form-input"><?= htmlspecialchars($listing['description'] ?? '') ?></textarea>
             </div>
 
             <div class="form-group">
               <label for="salary">Annual Salary</label>
-              <input type="text" id="salary" name="salary" placeholder="₱500,000" class="form-input" />
+              <input type="text" id="salary" name="salary" placeholder="₱500,000" class="form-input" value="<?= htmlspecialchars($listing['salary'] ?? '') ?>" />
             </div>
 
             <div class="form-group">
               <label for="requirements">Requirements</label>
-              <input type="text" id="requirements" name="requirements" placeholder="React, Tailwind, PHP" class="form-input" />
+              <input type="text" id="requirements" name="requirements" placeholder="React, Tailwind, PHP" class="form-input" value="<?= htmlspecialchars($listing['requirements'] ?? '') ?>" />
             </div>
 
             <div class="form-group full">
               <label for="benefits">Benefits</label>
-              <input type="text" id="benefits" name="benefits" placeholder="Health insurance, remote work, bonuses" class="form-input" />
+              <input type="text" id="benefits" name="benefits" placeholder="Health insurance, remote work, bonuses" class="form-input" value="<?= htmlspecialchars($listing['benefits'] ?? '') ?>" />
             </div>
           </div>
         </div>
@@ -48,32 +58,32 @@
           <div class="form-grid">
             <div class="form-group full">
               <label for="company">Company Name</label>
-              <input type="text" id="company" name="company" placeholder="Prosple Inc." class="form-input" />
+              <input type="text" id="company" name="company" placeholder="Prosple Inc." class="form-input" value="<?= htmlspecialchars($listing['company'] ?? '') ?>" />
             </div>
 
             <div class="form-group full">
               <label for="address">Address</label>
-              <input type="text" id="address" name="address" placeholder="123 Business Ave" class="form-input" />
+              <input type="text" id="address" name="address" placeholder="123 Business Ave" class="form-input" value="<?= htmlspecialchars($listing['address'] ?? '') ?>" />
             </div>
 
             <div class="form-group">
               <label for="city">City</label>
-              <input type="text" id="city" name="city" placeholder="Manila" class="form-input" />
+              <input type="text" id="city" name="city" placeholder="Manila" class="form-input" value="<?= htmlspecialchars($listing['city'] ?? '') ?>" />
             </div>
 
             <div class="form-group">
               <label for="state">State / Province</label>
-              <input type="text" id="state" name="state" placeholder="Metro Manila" class="form-input" />
+              <input type="text" id="state" name="state" placeholder="Metro Manila" class="form-input" value="<?= htmlspecialchars($listing['state'] ?? '') ?>" />
             </div>
 
             <div class="form-group">
               <label for="phone">Phone</label>
-              <input type="text" id="phone" name="phone" placeholder="+63 912 345 6789" class="form-input" />
+              <input type="text" id="phone" name="phone" placeholder="+63 912 345 6789" class="form-input" value="<?= htmlspecialchars($listing['phone'] ?? '') ?>" />
             </div>
 
             <div class="form-group">
               <label for="email">Application Email</label>
-              <input type="email" id="email" name="email" placeholder="jobs@company.com" class="form-input" />
+              <input type="email" id="email" name="email" placeholder="jobs@company.com" class="form-input" value="<?= htmlspecialchars($listing['email'] ?? '') ?>" />
             </div>
           </div>
         </div>

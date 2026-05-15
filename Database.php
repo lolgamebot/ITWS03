@@ -4,8 +4,6 @@ class Database
 {
     public $conn;
 
-    private static $messagePrinted = false;
-
     public function __construct($config)
     {
         $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']}";
@@ -17,21 +15,16 @@ class Database
 
         try {
             $this->conn = new PDO($dsn, $config['username'], $config['password'], $options);
-
-            if (!self::$messagePrinted) {
-                echo "Connected to database successfully.";
-                self::$messagePrinted = true;
-            }
         } catch (PDOException $e) {
             throw new Exception("Database connection failed: " . $e->getMessage());
         }
     }
 
-    public function Query($Query)
+    public function Query($Query, $params = [])
     {
         try {
             $sth = $this->conn->prepare($Query);
-            $sth->execute();
+            $sth->execute($params);
 
             return $sth;
         } catch (PDOException $e) {
