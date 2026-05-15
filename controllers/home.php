@@ -2,4 +2,4 @@
 
 $listings = $db->Query('SELECT * FROM listings LIMIT 6')->fetchAll();
 
-loadView('home');
+loadView('home', ['listings' => $listings]);

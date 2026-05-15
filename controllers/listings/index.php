@@ -1,3 +1,5 @@
 <?php
-loadView('listings/index');
-?>
+
+$listings = $db->Query('SELECT * FROM listings')->fetchAll();
+
+loadView('listings/index', ['listings' => $listings]);
