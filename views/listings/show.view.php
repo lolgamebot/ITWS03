@@ -1,3 +1,4 @@
+<?php use Framework\Authorization; ?>
 <?php loadPartial('head'); ?>
 <?php loadPartial('navbar'); ?>
 
@@ -61,6 +62,7 @@
             Back to Listings
           </a>
 
+          <?php if (Authorization::isOwner($listing['user_id'])): ?>
           <a href="/WS03/public/listings/<?= $listing['id'] ?>/edit" class="btn btn-primary">
             <i class="fa fa-pen"></i>
             Edit
@@ -73,6 +75,7 @@
               Delete
             </button>
           </form>
+          <?php endif; ?>
         </div>
       </div>
     </div>

@@ -5,7 +5,13 @@
     <div class="container mx-auto max-w-6xl px-4">
         <div class="jobs-section-header">
             <span class="jobs-section-badge">All Opportunities</span>
-            <h1 class="jobs-section-title">All Jobs</h1>
+            <h1 class="jobs-section-title">
+                <?php if (isset($keywords) && $keywords !== ''): ?>
+                    Search Results for "<?= htmlspecialchars($keywords) ?>"
+                <?php else: ?>
+                    All Jobs
+                <?php endif; ?>
+            </h1>
             <p class="jobs-section-subtitle">
                 Explore available openings across engineering, design, marketing, and data roles.
             </p>
@@ -44,14 +50,14 @@
                         <?php endif; ?>
                     </div>
 
-                    <a href="/WS03/Public/listings/<?= $listing['id'] ?>" class="job-details-btn">View Details</a>
+                    <a href="/WS03/public/listings/<?= $listing['id'] ?>" class="job-details-btn">View Details</a>
                 </div>
             </article>
             <?php endforeach; ?>
         </div>
 
         <div class="back-link-wrap">
-            <a href="/WS03/Public/" class="back-link">
+            <a href="/WS03/public/" class="back-link">
                 <i class="fa fa-arrow-left"></i>
                 <span>Back to Home</span>
             </a>

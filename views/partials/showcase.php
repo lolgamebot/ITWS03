@@ -12,15 +12,15 @@
             Browse opportunities from different companies and take the next step in your career journey.
         </p>
 
-        <form class="hero-search-form">
+        <form method="GET" action="/WS03/public/listings/search" class="hero-search-form">
             <div class="input-group">
                 <i class="fa fa-search"></i>
-                <input type="text" name="keywords" placeholder="Job title or keyword" />
+                <input type="text" name="keywords" placeholder="Job title or keyword" value="<?= htmlspecialchars($_GET['keywords'] ?? '') ?>" />
             </div>
 
             <div class="input-group">
                 <i class="fa fa-location-dot"></i>
-                <input type="text" name="location" placeholder="Location" />
+                <input type="text" name="location" placeholder="Location" value="<?= htmlspecialchars($_GET['location'] ?? '') ?>" />
             </div>
 
             <button class="btn btn-primary search-btn">
