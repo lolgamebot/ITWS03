@@ -4,6 +4,9 @@
 <section class="create-page">
   <div class="create-wrap">
     <div class="form-shell">
+
+      <?php loadPartial('message'); ?>
+
       <div class="form-hero">
         <span class="form-badge"><?= htmlspecialchars($listing['company']) ?></span>
         <h1><?= htmlspecialchars($listing['title']) ?></h1>
@@ -53,17 +56,17 @@
         </div>
 
         <div class="action-row">
-          <a href="/WS03/Public/listings" class="btn btn-secondary">
+          <a href="/WS03/public/listings" class="btn btn-secondary">
             <i class="fa fa-arrow-left"></i>
             Back to Listings
           </a>
 
-          <a href="/WS03/Public/listings/<?= $listing['id'] ?>/edit" class="btn btn-primary">
+          <a href="/WS03/public/listings/<?= $listing['id'] ?>/edit" class="btn btn-primary">
             <i class="fa fa-pen"></i>
             Edit
           </a>
 
-          <form method="POST" action="/WS03/Public/listings/<?= $listing['id'] ?>">
+          <form method="POST" action="/WS03/public/listings/<?= $listing['id'] ?>">
             <input type="hidden" name="_method" value="DELETE">
             <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to delete this listing?')">
               <i class="fa fa-trash"></i>

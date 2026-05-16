@@ -5,6 +5,7 @@ require __DIR__ . '/Router.php';
 require __DIR__ . '/controllers/HomeController.php';
 require __DIR__ . '/controllers/ListingController.php';
 require __DIR__ . '/controllers/ErrorController.php';
+require __DIR__ . '/controllers/UserController.php';
 
 function basePath($path = '')
 {
