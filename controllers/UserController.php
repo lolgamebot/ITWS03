@@ -1,6 +1,7 @@
 <?php
 
 use Framework\Validation;
+use Framework\Session;
 
 class UserController
 {
@@ -78,7 +79,65 @@ class UserController
             return;
         }
 
-        // Store user to database
-        // (to be completed in the next video)
+        // Check if email already exists
+        $existingUser = $this->db->Query(
+            'SELECT * FROM users WHERE email = :email',
+            [':email' => $email]
+        )->fetch();
+
+        if ($existingUser) {
+            $errors['email'] = 'That email already exists.';
+            loadView('users/create', [
+                'errors' => $errors,
+                'user' => [
+                    'name' => $name,
+                    'email' => $email,
+                    'city' => $city,
+                    'state' => $state,
+                ],
+            ]);
+            return;
+        }
+
+        // Create user account
+        $params = [
+            ':name' => $name,
+            ':email' => $email,
+            ':city' => $city,
+            ':state' => $state,
+            ':password' => password_hash($password, PASSWORD_DEFAULT),
+        ];
+
+        $this->db->Query(
+            'INSERT INTO users (name, email, city, state, password) VALUES (:name, :email, :city, :state, :password)',
+            $params
+        );
+
+        // Get new user ID and set session
+        $userId = $this->db->conn->lastInsertId();
+
+        Session::set('user', [
+            'id' => $userId,
+            'name' => $name,
+            'email' => $email,
+            'city' => $city,
+            'state' => $state,
+        ]);
+
+        redirect('/');
+    }
+
+    /**
+     * Logout user and kill session
+     * @return void
+     */
+    public function logout()
+    {
+        Session::clearAll();
+
+        $params = session_get_cookie_params();
+        setcookie('PHPSESSID', '', time() - 86400, $params['path'], $params['domain']);
+
+        redirect('/');
     }
 }
