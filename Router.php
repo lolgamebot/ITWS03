@@ -1,56 +1,70 @@
 <?php
+
+use Framework\Middleware\Authorize;
+
 class Router
 {
     protected $routes = [];
 
-    public function registerRoutes($method, $uri, $controller)
+    public function registerRoutes($method, $uri, $controller, $middleware = [])
     {
         $this->routes[] = [
             'method' => $method,
             'uri' => $uri,
-            'controller' => $controller
+            'controller' => $controller,
+            'middleware' => $middleware,
         ];
     }
 
-    public function get($uri, $controller)
+    /**
+     * Add GET route
+     * @param string $uri
+     * @param string $controller
+     * @param array $middleware
+     * @return void
+     */
+    public function get($uri, $controller, $middleware = [])
     {
-        $this->registerRoutes('GET', $uri, $controller);
+        $this->registerRoutes('GET', $uri, $controller, $middleware);
     }
 
-    /**   
+    /**
      * Add POST route
      * @param string $uri
      * @param string $controller
+     * @param array $middleware
      * @return void
      */
-    public function post($uri, $controller)
+    public function post($uri, $controller, $middleware = [])
     {
-        $this->registerRoutes('POST', $uri, $controller);
+        $this->registerRoutes('POST', $uri, $controller, $middleware);
     }
 
-    /** 
+    /**
      * Add PUT route
      * @param string $uri
      * @param string $controller
+     * @param array $middleware
      * @return void
      */
-    public function put($uri, $controller)
+    public function put($uri, $controller, $middleware = [])
     {
-        $this->registerRoutes('PUT', $uri, $controller);
+        $this->registerRoutes('PUT', $uri, $controller, $middleware);
     }
 
-    /**    
+    /**
      * Add DELETE route
      * @param string $uri
      * @param string $controller
+     * @param array $middleware
      * @return void
      */
-    public function delete($uri, $controller)
+    public function delete($uri, $controller, $middleware = [])
     {
-        $this->registerRoutes('DELETE', $uri, $controller);
+        $this->registerRoutes('DELETE', $uri, $controller, $middleware);
     }
 
-    /**   
+    /**
      * Load error page
      * @param int $httpCode
      * @return void
@@ -80,6 +94,11 @@ class Router
 
             if (preg_match($pattern, $uri, $matches) && $route['method'] === $method) {
                 array_shift($matches);
+
+                // Run middleware
+                foreach ($route['middleware'] as $mw) {
+                    (new Authorize())->handle($mw);
+                }
 
                 [$controller, $action] = explode('@', $route['controller']);
 

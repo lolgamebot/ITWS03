@@ -46,22 +46,18 @@ class UserController
 
         $errors = [];
 
-        // Validate email
         if (!Validation::email($email)) {
             $errors['email'] = 'Please enter a valid email address.';
         }
 
-        // Validate name
         if (!Validation::string($name, 2, 50)) {
             $errors['name'] = 'Name must be between 2 and 50 characters.';
         }
 
-        // Validate password
         if (!Validation::string($password, 6)) {
             $errors['password'] = 'Password must be at least 6 characters.';
         }
 
-        // Validate password match
         if (!Validation::match($password, $passwordConfirmation)) {
             $errors['password_confirmation'] = 'Passwords do not match.';
         }
@@ -122,6 +118,68 @@ class UserController
             'email' => $email,
             'city' => $city,
             'state' => $state,
+        ]);
+
+        redirect('/');
+    }
+
+    /**
+     * Login user
+     * @return void
+     */
+    public function loginUser()
+    {
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        $errors = [];
+
+        // Validate email
+        if (!Validation::email($email)) {
+            $errors['email'] = 'Please enter a valid email address.';
+        }
+
+        // Validate password length
+        if (!Validation::string($password, 6, 50)) {
+            $errors['password'] = 'Password must be at least 6 characters.';
+        }
+
+        // Check for errors
+        if (!empty($errors)) {
+            loadView('users/login', [
+                'errors' => $errors,
+            ]);
+            return;
+        }
+
+        // Check for email
+        $params = [':email' => $email];
+
+        $user = $this->db->Query(
+            'SELECT * FROM users WHERE email = :email',
+            $params
+        )->fetch();
+
+        if (!$user) {
+            $errors['email'] = 'Incorrect credentials.';
+            loadView('users/login', ['errors' => $errors]);
+            return;
+        }
+
+        // Check if password is correct
+        if (!password_verify($password, $user['password'])) {
+            $errors['email'] = 'Incorrect credentials.';
+            loadView('users/login', ['errors' => $errors]);
+            return;
+        }
+
+        // Set user session
+        Session::set('user', [
+            'id' => $user['id'],
+            'name' => $user['name'],
+            'email' => $user['email'],
+            'city' => $user['city'],
+            'state' => $user['state'],
         ]);
 
         redirect('/');
