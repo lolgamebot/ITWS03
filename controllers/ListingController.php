@@ -1,6 +1,8 @@
 <?php
 
 use Framework\Validation;
+use Framework\Session;
+use Framework\Authorization;
 
 class ListingController
 {
@@ -14,7 +16,9 @@ class ListingController
 
     public function index()
     {
-        $listings = $this->db->Query('SELECT * FROM listings')->fetchAll();
+        $listings = $this->db->Query(
+            'SELECT * FROM listings ORDER BY created_at DESC'
+        )->fetchAll();
 
         loadView('listings/index', ['listings' => $listings]);
     }
@@ -75,7 +79,7 @@ class ListingController
 
         $newListingData = array_intersect_key($_POST, array_flip($allowedFields));
 
-        $newListingData['user_id'] = 1;
+        $newListingData['user_id'] = Session::get('user')['id'];
 
         $newListingData = array_map('sanitize', $newListingData);
 
@@ -113,6 +117,8 @@ class ListingController
 
         $this->db->Query($query, $params);
 
+        Session::setFlash('success_message', 'Listing created successfully.');
+
         redirect('/listings');
     }
 
@@ -134,6 +140,13 @@ class ListingController
             return;
         }
 
+        // Authorization check
+        if (!Authorization::isOwner($listing['user_id'])) {
+            Session::setFlash('error_message', 'You are not authorized to update this listing.');
+            redirect('/listings/' . $id);
+            return;
+        }
+
         $allowedFields = [
             'title', 'description', 'salary', 'tags',
             'company', 'address', 'city', 'state',
@@ -141,11 +154,9 @@ class ListingController
         ];
 
         $updatedValues = array_intersect_key($_POST, array_flip($allowedFields));
-
         $updatedValues = array_map('sanitize', $updatedValues);
 
         $requiredFields = ['title', 'description', 'salary', 'email', 'city', 'state'];
-
         $errors = [];
 
         foreach ($requiredFields as $field) {
@@ -162,9 +173,7 @@ class ListingController
             return;
         }
 
-        // Submit to database
         $setClauses = implode(', ', array_map(fn($f) => "{$f} = :{$f}", array_keys($updatedValues)));
-
         $query = "UPDATE listings SET {$setClauses} WHERE id = :id";
 
         $params = [':id' => $id];
@@ -174,7 +183,7 @@ class ListingController
 
         $this->db->Query($query, $params);
 
-        $_SESSION['success_message'] = 'Listing updated successfully.';
+        Session::setFlash('success_message', 'Listing updated successfully.');
 
         redirect('/listings/' . $id);
     }
@@ -199,9 +208,16 @@ class ListingController
             return;
         }
 
+        // Authorization check
+        if (!Authorization::isOwner($listing['user_id'])) {
+            Session::setFlash('error_message', 'You are not authorized to delete this listing.');
+            redirect('/listings/' . $id);
+            return;
+        }
+
         $this->db->Query('DELETE FROM listings WHERE id = :id', $params);
 
-        $_SESSION['success_message'] = 'Listing deleted successfully.';
+        Session::setFlash('success_message', 'Listing deleted successfully.');
 
         redirect('/listings');
     }
