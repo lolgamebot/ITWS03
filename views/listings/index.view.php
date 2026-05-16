@@ -17,6 +17,21 @@
             </p>
         </div>
 
+        <form method="GET" action="/WS03/public/listings/search" class="hero-search-form" style="margin-bottom: 2rem;">
+            <div class="input-group">
+                <i class="fa fa-search"></i>
+                <input type="text" name="keywords" placeholder="Job title or keyword" value="<?= htmlspecialchars($keywords ?? '') ?>" />
+            </div>
+            <div class="input-group">
+                <i class="fa fa-location-dot"></i>
+                <input type="text" name="location" placeholder="Location" value="<?= htmlspecialchars($location ?? '') ?>" />
+            </div>
+            <button class="btn btn-primary search-btn">
+                <i class="fa fa-search"></i>
+                Search Jobs
+            </button>
+        </form>
+
         <?php loadPartial('message'); ?>
 
         <div class="jobs-grid">
