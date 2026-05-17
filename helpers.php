@@ -2,10 +2,10 @@
 
 require __DIR__ . '/Database.php';
 require __DIR__ . '/Router.php';
-require __DIR__ . '/controllers/HomeController.php';
-require __DIR__ . '/controllers/ListingController.php';
-require __DIR__ . '/controllers/ErrorController.php';
-require __DIR__ . '/controllers/UserController.php';
+require __DIR__ . '/controllers/homeController.php';
+require __DIR__ . '/controllers/listingController.php';
+require __DIR__ . '/controllers/userController.php';
+require __DIR__ . '/controllers/errorController.php';
 
 function basePath($path = '')
 {

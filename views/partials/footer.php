@@ -1,6 +1,6 @@
-<footer class="site-footer">
+<footer class="siteFooter">
     <div class="container mx-auto max-w-6xl px-4">
-        <div class="footer-grid">
+        <div class="footerColumns">
             <div>
                 <h3>Prosple</h3>
                 <p>
@@ -11,9 +11,9 @@
             <div>
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="/WS03/Public/">Home</a></li>
-                    <li><a href="/WS03/Public/listings">Jobs</a></li>
-                    <li><a href="/WS03/Public/listings/create">Post a Job</a></li>
+                    <li><a href="/WS03/public/">Home</a></li>
+                    <li><a href="/WS03/public/listings">Jobs</a></li>
+                    <li><a href="/WS03/public/listings/create">Post a Job</a></li>
                 </ul>
             </div>
 
@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="footer-bottom">
+        <div class="footerCopyright">
             <p>&copy; <?= date('Y') ?> Prosple. All rights reserved.</p>
         </div>
     </div>

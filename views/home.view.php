@@ -4,57 +4,59 @@ loadPartial('navbar');
 loadPartial('showcase');
 ?>
 
-<section class="top-banner">
+<section class="availableJobsBanner">
     <div class="container mx-auto max-w-6xl px-4">
         <h2>Available Opportunities</h2>
         <p>Explore job openings from different categories and companies.</p>
     </div>
 </section>
 
-<section class="jobs-section">
+<section class="listingsSection">
     <div class="container mx-auto max-w-6xl px-4">
-        <div class="jobs-section-header">
-            <span class="jobs-section-badge">Latest Jobs</span>
-            <h2 class="jobs-section-title">Recent Listings</h2>
-            <p class="jobs-section-subtitle">
+        <div class="listingsSectionHeader">
+            <span class="listingsSectionLabel">Latest Jobs</span>
+            <h2 class="listingsSectionTitle">Recent Listings</h2>
+            <p class="listingsSectionSubtitle">
                 Here are some of the recently posted job opportunities.
             </p>
         </div>
 
-        <div class="jobs-grid">
+        <div class="listingsGrid">
             <?php foreach ($listings as $listing): ?>
-            <article class="job-card">
-                <div class="job-card-content">
-                    <div class="job-card-top">
-                        <span class="job-card-category"><?= htmlspecialchars($listing['company']) ?></span>
-                        <span class="job-badge"><?= htmlspecialchars($listing['city']) ?></span>
+            <article class="listingCard">
+                <div class="listingCardBody">
+                    <div class="listingCardHeader">
+                        <span class="listingCompanyBadge"><?= htmlspecialchars($listing['company']) ?></span>
+                        <span class="listingLocationBadge"><?= htmlspecialchars($listing['city']) ?></span>
                     </div>
-                    <h3 class="job-card-title"><?= htmlspecialchars($listing['title']) ?></h3>
-                    <p class="job-card-description"><?= htmlspecialchars($listing['description']) ?></p>
-                    <div class="job-card-meta">
-                        <div class="job-meta-row">
-                            <span class="job-meta-label">Salary</span>
-                            <span class="job-salary"><?= htmlspecialchars($listing['salary']) ?></span>
+                    <h3 class="listingTitle"><?= htmlspecialchars($listing['title']) ?></h3>
+                    <p class="listingDescription"><?= htmlspecialchars($listing['description']) ?></p>
+                    <div class="listingMetaBox">
+                        <div class="listingMetaRow">
+                            <span class="listingMetaKey">Salary</span>
+                            <span class="listingSalary"><?= htmlspecialchars($listing['salary']) ?></span>
                         </div>
-                        <div class="job-meta-row">
-                            <span class="job-meta-label">Location</span>
-                            <span class="job-location"><?= htmlspecialchars($listing['city']) ?>, <?= htmlspecialchars($listing['state']) ?></span>
+                        <div class="listingMetaRow">
+                            <span class="listingMetaKey">Location</span>
+                            <span class="listingLocation"><?= htmlspecialchars($listing['city']) ?>, <?= htmlspecialchars($listing['state']) ?></span>
                         </div>
                         <?php if (!empty($listing['tags'])): ?>
-                        <div class="job-meta-row">
-                            <span class="job-meta-label">Tags</span>
-                            <span><?= htmlspecialchars($listing['tags']) ?></span>
+                        <div class="listingMetaRow">
+                            <span class="listingMetaKey">Tags</span>
+                            <div class="listingTagsRow">
+                                <span class="listingTag"><?= htmlspecialchars($listing['tags']) ?></span>
+                            </div>
                         </div>
                         <?php endif; ?>
                     </div>
-                    <a href="/WS03/Public/listings/<?= $listing['id'] ?>" class="job-details-btn">View Details</a>
+                    <a href="/WS03/public/listings/<?= $listing['id'] ?>" class="viewDetailsBtn">View Details</a>
                 </div>
             </article>
             <?php endforeach; ?>
         </div>
 
-        <div class="jobs-footer-link-wrap">
-            <a href="/WS03/Public/listings" class="jobs-footer-link">
+        <div class="showAllListingsWrap">
+            <a href="/WS03/public/listings" class="showAllListingsLink">
                 <span>Show All Jobs</span>
                 <i class="fa fa-arrow-right"></i>
             </a>
@@ -63,12 +65,12 @@ loadPartial('showcase');
 </section>
 
 <section class="container mx-auto max-w-6xl px-4 mb-16">
-    <div class="cta-banner">
+    <div class="postJobBanner">
         <div>
             <h2>Post a Job Opening</h2>
             <p>Share your job listing and reach more applicants.</p>
         </div>
-        <a href="/WS03/Public/listings/create" class="btn btn-primary">
+        <a href="/WS03/public/listings/create" class="btn btnPrimary">
             <i class="fa fa-edit"></i>
             Post a Job
         </a>

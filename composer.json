@@ -3,8 +3,14 @@
     "autoload": {
         "psr-4": {
             "Rage\\Ws03\\": "src/",
-            "Framework\\": "Framework/"
-        }
+            "Framework\\": "framework/"
+        },
+        "classmap": [
+            "framework/authorization.php",
+            "framework/session.php",
+            "framework/validation.php",
+            "framework/middleware/authorize.php"
+        ]
     },
     "authors": [
         {
